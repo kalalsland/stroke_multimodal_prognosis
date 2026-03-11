@@ -39,7 +39,7 @@ A PyTorch-based deep learning framework for stroke prognosis prediction using mu
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/kalalsland/stroke_multimodal_prognosis.git
 cd stroke_multimodal_prognosis
 
 # Install required packages
