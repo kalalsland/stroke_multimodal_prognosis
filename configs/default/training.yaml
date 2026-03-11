@@ -1,0 +1,112 @@
+# Training Configuration for Stroke Multimodal Prognosis
+# =======================================================
+
+# Training Parameters
+training:
+  # Epochs
+  num_epochs: 100
+  early_stopping_patience: 15
+  
+  # Validation
+  validation_frequency: 1  # Validate every N epochs
+  save_best_model: true
+  monitor_metric: "val_auc"  # Metric to monitor for best model
+  monitor_mode: "max"  # max or min
+  
+  # Gradient Management
+  gradient_clip_norm: 1.0
+  gradient_clip_value: null
+  accumulation_steps: 1  # Gradient accumulation
+  
+  # Mixed Precision Training
+  use_amp: false  # Automatic Mixed Precision
+  amp_opt_level: "O1"
+  
+  # Checkpointing
+  checkpoint_frequency: 5  # Save checkpoint every N epochs
+  keep_last_n_checkpoints: 3
+  save_optimizer_state: true
+
+# Optimizer Configuration
+optimizer:
+  type: "adamw"  # adam, adamw, sgd
+  learning_rate: 1e-4
+  weight_decay: 1e-4
+  
+  # Adam/AdamW specific
+  betas: [0.9, 0.999]
+  eps: 1e-8
+  amsgrad: false
+  
+  # SGD specific
+  momentum: 0.9
+  nesterov: true
+
+# Learning Rate Scheduler
+scheduler:
+  type: "cosine"  # cosine, step, plateau, exponential
+  
+  # Cosine Annealing
+  T_max: 100
+  eta_min: 1e-6
+  
+  # Step LR
+  step_size: 30
+  gamma: 0.1
+  
+  # ReduceLROnPlateau
+  mode: "max"
+  factor: 0.5
+  patience: 10
+  min_lr: 1e-7
+  
+  # Warmup (optional)
+  warmup_epochs: 5
+  warmup_factor: 0.1
+
+# Loss Weights (can override model.yaml)
+loss_weights:
+  classification: 1.0
+  alignment: 0.5
+  contrastive: 0.3
+  
+# Evaluation Metrics
+metrics:
+  primary: "auc"  # Primary metric for model selection
+  compute_metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1"
+    - "auc"
+    - "specificity"
+    - "npv"
+
+# Logging Configuration
+logging:
+  log_frequency: 10  # Log every N batches
+  use_tensorboard: true
+  tensorboard_dir: "logs/tensorboard"
+  save_predictions: true
+  verbose: true
+
+# Reproducibility
+reproducibility:
+  seed: 42
+  deterministic: true
+  benchmark: false  # CuDNN benchmark for faster training
+
+# Distributed Training (if applicable)
+distributed:
+  enabled: false
+  backend: "nccl"  # nccl for GPU, gloo for CPU
+  world_size: 1
+  rank: 0
+
+# Resource Management
+resources:
+  device: "cuda"  # cuda, cpu, or auto
+  gpu_ids: [0]  # List of GPU IDs to use
+  num_workers: 4
+  pin_memory: true
+  non_blocking: true
