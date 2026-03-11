@@ -474,19 +474,6 @@ Contributions are welcome! Please follow these guidelines:
 - Write Google-style docstrings
 - Add unit tests for new features
 
-## Citation
-
-If you use this code in your research, please cite:
-
-```bibtex
-@article{your_paper,
-  title={Multimodal Deep Learning for Stroke Prognosis Prediction},
-  author={Your Name},
-  journal={Your Journal},
-  year={2024}
-}
-```
-
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
