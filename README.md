@@ -228,7 +228,7 @@ training:
 
 ### Overview
 
-![our framkwork](picture\framework.png)
+![our framework](picture/framework.png)
 
 ### Encoders
 
