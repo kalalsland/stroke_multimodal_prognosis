@@ -2,7 +2,7 @@
 
 A PyTorch-based deep learning framework for stroke prognosis prediction using multimodal medical data (MRI images, clinical reports, and tabular data).
 
-## 🌟 Features
+## Features
 
 - **Multimodal Learning**: Integrates 3D MRI images, clinical text reports, and tabular clinical data
 - **Advanced Fusion**: Variable-Density Adaptive Fusion Module (VDAFM) with low-rank projection
@@ -13,7 +13,7 @@ A PyTorch-based deep learning framework for stroke prognosis prediction using mu
 - **Training Pipeline**: Complete training, validation, and evaluation pipeline
 - **Data Augmentation**: Built-in augmentation strategies for medical images
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Installation](#installation)
 - [Project Structure](#project-structure)
@@ -27,7 +27,7 @@ A PyTorch-based deep learning framework for stroke prognosis prediction using mu
 - [Contributing](#contributing)
 - [Citation](#citation)
 
-## 🔧 Installation
+## Installation
 
 ### Prerequisites
 
@@ -66,7 +66,7 @@ pip install -r requirements.txt
    └── clinical_data.csv
    ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 stroke_multimodal_prognosis/
@@ -93,7 +93,7 @@ stroke_multimodal_prognosis/
 └── README.md                  # This file
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Basic Training
 
@@ -224,32 +224,11 @@ training:
   log_interval: 10
 ```
 
-## 🏗️ Model Architecture
+## Model Architecture
 
 ### Overview
 
-The model consists of three main components:
-
-1. **Encoders**: Extract features from each modality
-2. **Fusion Module**: Combine multimodal features
-3. **Classification Head**: Predict prognosis
-
-```
-┌─────────────┐
-│ MRI Image   │─┐
-│ (3D Volume) │ │  
-└─────────────┘ │
-                ├─→ ┌──────────┐     ┌─────────────┐     ┌──────────┐
-┌─────────────┐ │   │          │     │   VDAFM     │     │Classifier│
-│  Clinical   │─┼─→ │ Encoders │ ──→ │   Fusion    │ ──→ │  Head    │ ──→ Prediction
-│   Report    │ │   │          │     │   Module    │     │          │
-└─────────────┘ │   └──────────┘     └─────────────┘     └──────────┘
-                │
-┌─────────────┐ │
-│  Clinical   │─┘
-│    Data     │
-└─────────────┘
-```
+![our framkwork](picture\framework.png)
 
 ### Encoders
 
@@ -286,7 +265,7 @@ The Variable-Density Adaptive Fusion Module (VDAFM) uses:
 
 3. **Cross-Modal Attention**: Captures inter-modality relationships
 
-## 🎓 Training
+## Training
 
 ### Basic Training
 
@@ -317,7 +296,7 @@ experiments/{experiment_name}/
 
 Training automatically stops if validation loss doesn't improve for `early_stopping_patience` epochs.
 
-## 📊 Evaluation
+## Evaluation
 
 ### Metrics
 
@@ -351,7 +330,7 @@ metrics = compute_metrics(y_true, y_pred)
 print(metrics)
 ```
 
-## 💡 Usage Examples
+## Usage Examples
 
 ### Example 1: Simple Inference
 
@@ -422,7 +401,7 @@ trainer.train()
 
 See `example_usage.py` for more detailed examples.
 
-## 🔬 Advanced Topics
+## Advanced Topics
 
 ### Custom Fusion Strategies
 
@@ -478,7 +457,7 @@ torch.onnx.export(
 )
 ```
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please follow these guidelines:
 
@@ -495,7 +474,7 @@ Contributions are welcome! Please follow these guidelines:
 - Write Google-style docstrings
 - Add unit tests for new features
 
-## 📝 Citation
+## Citation
 
 If you use this code in your research, please cite:
 
@@ -508,31 +487,12 @@ If you use this code in your research, please cite:
 }
 ```
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - BioBERT: https://github.com/dmis-lab/biobert
 - 3D ResNet: https://github.com/Tencent/MedicalNet
 - PyTorch: https://pytorch.org/
-
-## 📞 Contact
-
-For questions or issues, please:
-- Open an issue on GitHub
-- Contact: your.email@example.com
-
-## 🔄 Updates
-
-### Version 1.0.0 (2024-03-11)
-- Initial release
-- Complete multimodal architecture
-- VDAFM fusion module
-- Training and evaluation pipeline
-- Comprehensive documentation
-
----
-
-**Happy modeling! 🎉**
