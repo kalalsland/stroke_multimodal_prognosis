@@ -67,6 +67,10 @@ visualizations/
 !docs/*.jpg
 !picture/*.png
 
+# 实验输出（per-seed 目录：模型权重、结果文件等）
+experiments/seed_*/
+!experiments/best_config.json
+
 # 数据集（如果不想上传大型数据集）
 data/raw/
 data/processed/

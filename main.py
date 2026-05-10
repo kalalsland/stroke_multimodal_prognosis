@@ -1,8 +1,9 @@
 """Entry point for stroke multimodal prognosis training.
 
-Usage (run from the project root e:/大学文件/大创/clinic_med_essay/essay_code):
+Usage — run directly from the project directory:
 
-    python -m stroke_multimodal_prognosis.main
+    cd stroke_multimodal_prognosis
+    python main.py
 
 The script:
   1. Loads pre-encoded features (tabular, image, text) from Excel files.
@@ -13,6 +14,14 @@ The script:
 
 import json
 import os
+import sys
+
+# Allow running as `python main.py` directly from the project directory.
+# Insert the *parent* of this file into sys.path so that relative imports
+# (from .config, from .data, …) resolve correctly in both execution modes.
+if __name__ == "__main__" and __package__ is None:
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    __package__ = "stroke_multimodal_prognosis"  # noqa: F841
 
 import numpy as np
 import optuna
