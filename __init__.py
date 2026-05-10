@@ -1,22 +1,23 @@
 """
-Stroke Multimodal Prognosis Package
-===================================
+Stroke Multimodal Prognosis
+===========================
 
-A PyTorch-based framework for multi-modal stroke prognosis prediction
-using clinical data, medical images, and text reports.
+A PyTorch-based framework for multimodal stroke prognosis prediction using
+pre-encoded clinical tabular, image, and text features.
 
-Author: Research Team
-License: MIT
+Primary model: OursFusion (Vision-Guided Dual Alignment Fusion, VDAFM).
+
+Run training:
+    python -m stroke_multimodal_prognosis.main
 """
 
-__version__ = "1.0.0"
-__author__ = "Research Team"
+__version__ = "2.0.0"
 
-# Import core components
-from stroke_multimodal_prognosis.models.multimodal_model import StrokePrognosisModel
-from stroke_multimodal_prognosis.config.base_config import BaseConfig
+from .config import CONFIG
+from .models.ours_fusion import OursFusion, VisionGuidedTextEncoder
 
 __all__ = [
-    "StrokePrognosisModel",
-    "BaseConfig",
+    "CONFIG",
+    "OursFusion",
+    "VisionGuidedTextEncoder",
 ]

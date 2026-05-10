@@ -65,6 +65,7 @@ visualizations/
 !assets/*.jpg
 !docs/*.png
 !docs/*.jpg
+!picture/*.png
 
 # 数据集（如果不想上传大型数据集）
 data/raw/
@@ -75,6 +76,9 @@ data/datasets/
 *.npz
 *.pkl
 *.pickle
+
+# 编码后的特征数据（xlsx）需要保留，请勿忽略
+# data/encoded/ 目录下的 .xlsx 文件已明确跟踪
 
 # IDE
 .vscode/

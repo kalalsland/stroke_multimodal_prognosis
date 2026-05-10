@@ -1,43 +1,15 @@
 """Model definitions for stroke prognosis prediction.
 
-This package contains:
-- backbones: Individual encoders for each modality (image, text, table)
-- fusion_modules: Multimodal fusion mechanisms (VDAFM)
-- multimodal_model: The complete end-to-end model
-
-Public API:
-    - ImageEncoder3D: 3D ResNet-50 for MRI image encoding
-    - TextEncoderBioBERT: BioBERT-based text encoder
-    - TableEncoder: Residual MLP for tabular data
-    - VDAFM: Vision-guided dual alignment fusion module
-    - StrokePrognosisModel: Complete multimodal model for stroke prognosis
+Primary model: OursFusion (Vision-Guided Dual Alignment Fusion).
+The advanced VDAFM variant is also available in fusion_modules/vdafm.py.
 """
 
-from .backbones import (
-    ImageEncoder,
-    TextEncoder,
-    TableEncoder,
-    BioBERTEncoder,
-    ResNet50_3D,
-    ResidualMLPEncoder
-)
-from .fusion_modules.vdafm import (
-    VDAFM,
-    VDAFMConfig,
-)
-from .multimodal_model import StrokePrognosisModel
+from .ours_fusion import OursFusion, VisionGuidedTextEncoder
+from .fusion_modules.vdafm import VDAFM, VDAFMConfig
 
 __all__ = [
-    # Backbone encoders
-    "ImageEncoder",
-    "TextEncoder",
-    "TableEncoder",
-    "BioBERTEncoder",
-    "ResNet50_3D",
-    "ResidualMLPEncoder",
-    # Fusion module
+    "OursFusion",
+    "VisionGuidedTextEncoder",
     "VDAFM",
     "VDAFMConfig",
-    # Main model
-    "StrokePrognosisModel",
 ]
