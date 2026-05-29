@@ -12,7 +12,7 @@ import torch
 from sklearn.preprocessing import StandardScaler
 from torch.utils.data import Dataset
 
-from ..config import CONFIG
+from config import CONFIG
 
 
 class MultimodalDataset(Dataset):

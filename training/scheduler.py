@@ -115,11 +115,12 @@ def get_cosine_schedule_with_warmup(
     num_training_steps: int,
     num_cycles: float = 0.5,
     last_epoch: int = -1,
+    min_lr_ratio: float = 0.0,
 ) -> LambdaLR:
     """Cosine LR schedule with linear warmup (batch-level stepping).
 
     During warmup the LR rises linearly from 0 → base LR.
-    After warmup it follows a cosine curve down to 0.
+    After warmup it follows a cosine curve down to min_lr_ratio * base_lr.
 
     Args:
         optimizer:           Optimizer whose LR will be scheduled.
@@ -127,6 +128,7 @@ def get_cosine_schedule_with_warmup(
         num_training_steps:  Total training steps.
         num_cycles:          Number of cosine cycles (default 0.5 = half cosine).
         last_epoch:          The index of the last epoch (for resuming).
+        min_lr_ratio:        Minimum LR as a fraction of base LR (default 0.0).
 
     Returns:
         A ``LambdaLR`` scheduler.
@@ -138,10 +140,11 @@ def get_cosine_schedule_with_warmup(
         progress = float(current_step - num_warmup_steps) / float(
             max(1, num_training_steps - num_warmup_steps)
         )
-        return max(
+        cosine_factor = max(
             0.0,
             0.5 * (1.0 + math.cos(math.pi * float(num_cycles) * 2.0 * progress)),
         )
+        return max(min_lr_ratio, cosine_factor)
 
     return LambdaLR(optimizer, lr_lambda, last_epoch)
 
@@ -173,7 +176,20 @@ def build_scheduler(optimizer, cfg: dict, steps_per_epoch: int):
     if stype == "cosine_warmup":
         total_steps = steps_per_epoch * cfg["epochs"]
         warmup_steps = steps_per_epoch * cfg["warmup_epochs"]
-        scheduler = get_cosine_schedule_with_warmup(optimizer, warmup_steps, total_steps)
+        min_lr_ratio = cfg.get("min_lr", 1e-7) / max(cfg["learning_rate"], 1e-10)
+        scheduler = get_cosine_schedule_with_warmup(
+            optimizer, warmup_steps, total_steps, min_lr_ratio=min_lr_ratio
+        )
+        scheduler_batch_step = True
+
+    elif stype == "cosine_restarts":
+        # CosineAnnealingWarmRestarts: periodically resets LR to help escape local minima
+        t0 = steps_per_epoch * cfg.get("restart_period_epochs", 25)
+        t_mult = int(cfg.get("restart_t_mult", 2))
+        eta_min = cfg.get("min_lr", 1e-7)
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
+            optimizer, T_0=max(1, t0), T_mult=t_mult, eta_min=eta_min
+        )
         scheduler_batch_step = True
 
     elif stype == "cosine":

@@ -164,6 +164,8 @@ class OursFusion(nn.Module):
         tabular: Tensor,
         image: Tensor,
         text: Tensor,
+        compute_contrastive: bool = True,
+        compute_alignment: bool = True,
         compute_cl: bool = True,
         compute_align: bool = True,
     ) -> Tuple[Tensor, Tensor, Tensor]:
@@ -181,11 +183,11 @@ class OursFusion(nn.Module):
         text_proj = self.text_projection(e_txt_encoded)
 
         contrastive_loss = torch.tensor(0.0, device=image_proj.device)
-        if compute_cl:
+        if compute_contrastive and compute_cl:
             contrastive_loss = self._contrastive_loss(image_proj, text_proj)
 
         alignment_loss = torch.tensor(0.0, device=image_proj.device)
-        if compute_align:
+        if compute_alignment and compute_align:
             img2txt = self.mlp_image_to_text(e_img_encoded)
             txt2img = self.mlp_text_to_image(e_txt_encoded)
             loss_i2t = 1.0 - F.cosine_similarity(img2txt, e_txt_encoded, dim=-1).mean()

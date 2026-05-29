@@ -67,9 +67,8 @@ visualizations/
 !docs/*.jpg
 !picture/*.png
 
-# 实验输出（per-seed 目录：模型权重、结果文件等）
-experiments/seed_*/
-!experiments/best_config.json
+# 实验全部输出（含 seed 目录、权重等）
+experiments/
 
 # 数据集（如果不想上传大型数据集）
 data/raw/
@@ -81,8 +80,17 @@ data/datasets/
 *.pkl
 *.pickle
 
-# 编码后的特征数据（xlsx）需要保留，请勿忽略
-# data/encoded/ 目录下的 .xlsx 文件已明确跟踪
+# 编码后的特征数据含患者隐私，不上传
+data/encoded/*.xlsx
+data/encoded/*.xls
+
+# embeding 子目录下的所有特征/原始数据 Excel（患者隐私）
+embeding/**/*.xlsx
+embeding/**/*.xls
+embeding/**/*.csv
+
+# 实验全部输出（含 best_config.json、seed 目录等）
+experiments/
 
 # IDE
 .vscode/

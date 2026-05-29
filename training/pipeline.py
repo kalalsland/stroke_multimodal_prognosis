@@ -22,8 +22,8 @@ from sklearn.model_selection import StratifiedKFold, train_test_split
 from ..data.dataset import MultimodalDataset
 from ..data.augmentation import apply_smote
 from ..models.ours_fusion import OursFusion
-from ..training.scheduler import RAdam, build_scheduler
-from ..training.loops import evaluate, train_one_epoch
+from .scheduler import RAdam, build_scheduler
+from .loops import evaluate, train_one_epoch
 
 
 def _init_weights(m: nn.Module) -> None:

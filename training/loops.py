@@ -76,7 +76,8 @@ def train_one_epoch(
             text_m = lam * text + (1 - lam) * text[idx]
             labels_a, labels_b = labels, labels[idx]
             outputs, cl_loss, align_loss = model(
-                tabular_m, image_m, text_m, compute_cl=False, compute_align=False
+                tabular_m, image_m, text_m,
+                compute_contrastive=False, compute_alignment=False,
             )
             cls_loss = lam * criterion(outputs, labels_a) + (1 - lam) * criterion(outputs, labels_b)
             loss = cls_loss
@@ -144,7 +145,7 @@ def evaluate(
             text = text.to(device)
             labels = labels.to(device)
 
-            outputs, _, _ = model(tabular, image, text, compute_cl=False, compute_align=False)
+            outputs, _, _ = model(tabular, image, text, compute_contrastive=False, compute_alignment=False)
             loss = criterion(outputs, labels)
             total_loss += loss.item() * len(labels)
 
@@ -182,7 +183,7 @@ def evaluate(
 
 
 def find_optimal_threshold(labels: List[int], probs: List[float]) -> float:
-    """Sweep thresholds in [0.3, 0.7] and pick the one maximising F1."""
+    """Sweep thresholds in [0.3, 0.7] and pick the one maximising F1 on val set."""
     best_t, best_f1 = 0.5, 0.0
     for t in np.linspace(0.3, 0.7, 50):
         preds = (np.array(probs) >= t).astype(int)
